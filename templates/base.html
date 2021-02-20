@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>WebChat</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/master.css'%}"/>
+  </head>
+  <body>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
+    			<div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Home Page</a>
+    					<ul class="nav navbar-nav">
+
+                {% if user.is_authenticated %}
+                <li><a href="" class="btn btn-simple">My Profile</a></li></li>
+                <li><a href="{% url 'accounts:logout' %}" class="btn btn-simple">Log out</a></li>
+                {% else %}
+      					<li><a href="{% url 'accounts:login' %}" class="btn btn-simple">Log in</a></li>
+      					<li><a href="{% url 'accounts:signup' %}" class="btn btn-simple">Sign up</a></li>
+                {% endif %}
+    					</ul>
+            </div>
+    	</nav>
+
+        <div class="container">
+          {% block content %}
+          {% endblock %}
+        </div>
+
+  </body>
+</html>

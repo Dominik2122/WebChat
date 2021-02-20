@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Welcome to WebChat </h1>
+    {% for user in other_users %}
+    <p><a href="{% url 'WebChat:chat' pk=1%}">{{user.username}}</a></p>
+
+    {% endfor %}
+{% endblock %}

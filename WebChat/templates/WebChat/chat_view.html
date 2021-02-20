@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+{% load bootstrap4 %}
+{% load static %}
+
+<div class="container">
+    <div class="chat_update">
+    </div>
+    <form  class='form-message-ajax' method='POST' action='{% url "WebChat:create" pk=chat.pk %}'>
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" value="Send!" class="btn btn-default">Send</button>
+    </form>
+</div>
+
+<script type="text/javaScript" src="{% static 'js/game.js' %}" ></script>
+<script>
+  window.setInterval(function(){get_Msg()}, 100)
+</script>
+
+{% endblock %}
