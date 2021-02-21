@@ -51,13 +51,28 @@ beforeSend: function(xhr, settings) {
 });
 });
 
-function update_Msg(messages){
+function update_Msg(messages, current_user_id){
   var chat_field = $('.chat_update')
   chat_field.empty()
-  for(i = 0; i < 10; i++){
-    chat_field.append("<p>" + messages[i]['message'] + '</p>')
+  if(messages.length>=20){
+  for(i = messages.length-20; i < messages.length; i++){
+    if (messages[i].author_id==current_user_id){
+    chat_field.append("<p class='current-user-message'>" + messages[i]['message'] + '</p>')
+  } else {
+    chat_field.append("<p class='other-user-message'>" + messages[i]['message'] + '</p>')
   }
-};
+      }
+    }
+  else {
+    for(i = 0; i < messages.length; i++){
+      if (messages[i].author_id==current_user_id){
+      chat_field.append("<p class='current-user-message'>" + messages[i]['message'] + '</p>')
+    } else {
+      chat_field.append("<p class='other-user-message'>" + messages[i]['message'] + '</p>')
+    }
+        }
+      }
+    };
 
 
 function get_Msg(){
@@ -66,7 +81,7 @@ function get_Msg(){
       method: "GET",
       data: {},
       success: function(json){
-        update_Msg(json['messages'])
+        update_Msg(json['messages'], json['current_user_id'])
       } ,
       error: function(errorData){
       }
@@ -77,19 +92,25 @@ function get_Msg(){
   $(document).ready(function(){
     var messageForm = $('.form-message-ajax')
     messageForm.submit(function(event){
-      event.preventDefault();
+      event.preventDefault()
       var thisForm = messageForm
-      console.log('hi')
+      var actionEndPoint = thisForm.attr('action')
+      var httpMethod = thisForm.attr('method')
+      var formData = thisForm.serializeArray()[1]['value']
+      var chatId = actionEndPoint.replace(/\D/g, "")
+      messageForm.trigger("reset")
       $.ajax({
-        url: "",
-        method: "POST",
+        url: "create/",
+        method: httpMethod,
         data: {
-          "form" : thisForm.serializeArray()[1]["value"]},
+          "chatId" : chatId,
+          "form" : formData},
         success: function(json){
-          window.location.replace(json['chat_id'])
         } ,
         error: function(errorData){
         }
       })
+
     })
+
   })

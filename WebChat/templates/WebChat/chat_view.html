@@ -2,18 +2,34 @@
 {% block content %}
 {% load bootstrap4 %}
 {% load static %}
-
+</div>
+<div class="row row-cols-2">
+<div class="col-md-2">
+{% for chat in other_chats %}
+{% for member in chat.members.all %}
+{% if member != current_user %}
+<a href="{% url 'WebChat:chat' pk=chat.pk%}"><p>{{member.username}}</p>
+<p>{{chat.messages.all.last.message}}</p></a>
+{% endif  %}
+{% endfor %}
+{% endfor %}
+</div>
+<div class="col-md-8">
 <div class="container">
-    <div class="chat_update">
+
+
+    <div class="chat_update" id='scroll-messages'>
     </div>
-    <form  class='form-message-ajax' method='POST' action='{% url "WebChat:create" pk=chat.pk %}'>
+
+    <form  class='form-message-ajax fixed-bottom container' method='POST' action='{% url "WebChat:create" pk=chat.pk %}'>
         {% csrf_token %}
         {% bootstrap_form form %}
-        <button type="submit" value="Send!" class="btn btn-default">Send</button>
+        <input type="submit" value="Send!" class="btn btn-default">
     </form>
 </div>
-
-<script type="text/javaScript" src="{% static 'js/game.js' %}" ></script>
+</div>
+</div>
+<script type="text/javaScript" src="{% static 'js/chat.js' %}" ></script>
 <script>
   window.setInterval(function(){get_Msg()}, 100)
 </script>

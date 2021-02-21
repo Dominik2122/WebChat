@@ -3,5 +3,6 @@ from . import views
 app_name = 'WebChat'
 urlpatterns = [
     path("<int:pk>/", views.ChatView.as_view(),name='chat'),
-    path('<int:pk>/create/', views.MessageCreate, name = "create")
+    path('<int:pk>/create/', views.MessageCreate, name = "create"),
+    path('create/<int:pk>', views.ChatCreate, name = 'new')
 ]
