@@ -51,11 +51,11 @@ beforeSend: function(xhr, settings) {
 });
 });
 
-function update_Msg(messages, current_user_id){
+function update_Msg(messages, current_user_id, end){
   var chat_field = $('.chat_update')
   chat_field.empty()
-  if(messages.length>=20){
-  for(i = messages.length-20; i < messages.length; i++){
+  if(messages.length>=end){
+  for(i = messages.length-end; i < messages.length; i++){
     if (messages[i].author_id==current_user_id){
     chat_field.append("<p class='current-user-message'>" + messages[i]['message'] + '</p>')
   } else {
@@ -74,6 +74,19 @@ function update_Msg(messages, current_user_id){
       }
     };
 
+function update_list(messages, current_user_id, users_id){
+  var other_chats = $('.other_chats')
+  other_chats.empty()
+  var current_user_name = users_id[current_user_id]
+  for(var i = 0; i<messages.length; i++){
+    var author_name = users_id[messages[i]['author']]
+    if(messages[i]['unread'] != true | messages[i]['prev-author'] == current_user_name){
+    other_chats.append("<a class = 'old_message' href='/chat/"+messages[i]['chat']+"/'><h2 class = 'list_user'>"+ author_name + "</h2><p class = 'list_messages'>" +messages[i]['message'] + "</p></a>")
+  } else{
+    other_chats.append("<a class = 'new_message' href='/chat/"+messages[i]['chat']+"/'><h2 class = 'new_list_user'>"+ author_name + "</h2><p class = 'new_list_messages'>" +messages[i]['message'] + "</p></a>")
+  }}
+};
+
 
 function get_Msg(){
     $.ajax({
@@ -81,12 +94,13 @@ function get_Msg(){
       method: "GET",
       data: {},
       success: function(json){
-        update_Msg(json['messages'], json['current_user_id'])
-      } ,
+        update_Msg(json['messages'], json['current_user_id'],16),
+        update_list(json['other_messages'], json['current_user_id'], json['users_id'])
+      },
       error: function(errorData){
       }
     })
-}
+};
 
 
   $(document).ready(function(){
@@ -110,7 +124,5 @@ function get_Msg(){
         error: function(errorData){
         }
       })
-
     })
-
-  })
+  });

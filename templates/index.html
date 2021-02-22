@@ -2,24 +2,41 @@
 {% block content %}
 {% load bootstrap4 %}
     <h1>Welcome to WebChat </h1>
-    <div class="row row-cols-2">
-    <div class="col-6">
+    <div class="row row-cols-3">
+
+
+    <div class="col-4">
+    <h1>Your recent chats</h1>
+    {% for chat in user_chats %}
+    {% for member in chat.members.all %}
+    {% if member != current_user %}
+    <a href="{% url 'WebChat:chat' pk=chat.pk%}"><p>Chat with: {{member.username}}</p>
+      <p>{{chat.messages.all.last.author}} wrote: {{chat.messages.all.last.message}}</p></a>
+    {% endif  %}
+    {% endfor %}
+    {% endfor %}
+    </div>
+    <div class="col-4">
+    <h1>Your unread messages</h1>
+    {% for chat in new_messages_chats %}
+    {% for member in chat.members.all %}
+    {% if member != current_user and member.username == chat.messages.all.last.author.username %}
+    <div class="unread message">
+      <a href="{% url 'WebChat:chat' pk=chat.pk%}"><p>Chat with: {{member.username}}</p>
+        <p>{{chat.messages.all.last.author}} wrote: {{chat.messages.all.last.message}}</p></a>
+    </div>
+    {% endif  %}
+    {% endfor %}
+    {% endfor %}
+    </div>
+
+    <div class="col-4">
     <h1>Maybe you would like to talk to someone new?</h1>
     {% for user in other_users %}
     <p><a href="{% url 'WebChat:new' pk=user.pk %}">{{user.username}}</a></p>
     {% endfor %}
     </div>
 
-    <div class="col-6">
-    <h1>Your recent chats</h1>
-    {% for chat in user_chats %}
-    {% for member in chat.members.all %}
-    {% if member != current_user %}
-    <p><a href="{% url 'WebChat:chat' pk=chat.pk%}">{{member.username}}</a></p>
-    {% endif  %}
-    {% endfor %}
-    {% endfor %}
-    </div>
     </div>
 
 

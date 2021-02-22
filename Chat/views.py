@@ -1,7 +1,10 @@
 from django.views.generic import TemplateView
 from django.contrib.auth import get_user_model
-from WebChat.models import Chat
+from WebChat.models import Chat, Message
 User = get_user_model()
+
+
+
 class HomePage(TemplateView):
     template_name = 'index.html'
     def get_context_data(self, **kwargs):
@@ -13,9 +16,16 @@ class HomePage(TemplateView):
             for user in other_users:    #loop through members and add their id to list
                 user_chats_members.append(user.id)
         other_users = User.objects.exclude(id__in=user_chats_members) #with id of already existing chats, let's create a queryset of users with whom current_user doesnt have a chat
-        context['other_users'] = other_users 
+        new_messages = Message.objects.filter(unread = True, chat__in=user_chats)
+        new_messages_chats = []
+        for new_message in new_messages:
+            chat = new_message.chat
+            if chat not in new_messages_chats:
+                new_messages_chats.append(new_message.chat)
+        context['other_users'] = other_users
         context['user_chats'] = user_chats
         context['current_user'] = self.current_user
+        context['new_messages_chats'] = new_messages_chats
 
         return context
     def get(self,request,*args, **kwargs):

@@ -4,7 +4,7 @@ h1 {
 }
 
 .current-user-message {
-  color: green;
+  color: blue;
   text-align: right;
 }
 
@@ -12,4 +12,13 @@ h1 {
 #scroll-messages{
   height: calc(100vh - 200px);
   overflow-y: scroll;
+}
+
+.old_message {
+  color:black;
+}
+
+.new_message {
+  color:blue;
+  font-size:bold;
 }

@@ -7,7 +7,7 @@ class Chat(models.Model):
     members = models.ManyToManyField(User)
     name = models.CharField(max_length=20)
     def __str__(self):
-        return self.name
+        return str(self.pk)
 
 
 class Message(models.Model):
@@ -15,5 +15,6 @@ class Message(models.Model):
     message = models.CharField(max_length=255)
     sent_at = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, related_name = 'messages', on_delete=models.CASCADE)
+    unread = models.BooleanField(default=False)
     class Meta:
         ordering = ["sent_at"]
