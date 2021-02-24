@@ -1,18 +1,23 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView, DetailView, CreateView, View
+from django.views.generic import DetailView
 from .models import Chat, Message
 from .forms import MessageForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
-import json
 from django.forms.models import model_to_dict
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 User = get_user_model()
 
-class ChatView(DetailView):
+class ChatView(LoginRequiredMixin, DetailView):
     model = Chat
-    template_name = 'WebChat/chat_view.html'
+    def get_template_names(self):
+        chat = self.get_object()
+        if self.current_user in chat.members.all():
+            return ['WebChat/chat_view.html']
+        else:
+            return ['index.html']
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         chat = self.get_object()
@@ -63,6 +68,8 @@ class ChatView(DetailView):
                                 'other_messages':list_of_other_messages,
                                 'users_id' : users_id})
         return super().get(request, *args, **kwargs)
+
+@login_required
 def MessageCreate(request, pk):
         if request.is_ajax():
             chat = Chat.objects.filter(pk = int(request.POST.get('chatId'))).first()
@@ -70,10 +77,14 @@ def MessageCreate(request, pk):
             new_message.save()
         return HttpResponseRedirect(reverse_lazy('home'))
 
-
+@login_required
 def ChatCreate(request, pk):
+    chat_exist = list(Chat.objects.filter(members = request.user.pk).filter(members = pk))
+    print(chat_exist)
+    if len(chat_exist)==0:
         new_chat = Chat.objects.create()
         new_chat.members.set(User.objects.filter(id__in=[pk,request.user.id]))
         new_chat.save()
-        print(new_chat)
         return HttpResponseRedirect(reverse_lazy('WebChat:chat', kwargs={'pk':new_chat.id}))
+    else:
+        return HttpResponseRedirect(reverse_lazy('WebChat:chat', kwargs={'pk': chat_exist[0].id}))

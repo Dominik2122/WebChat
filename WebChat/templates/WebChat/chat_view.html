@@ -2,32 +2,60 @@
 {% block content %}
 {% load bootstrap4 %}
 {% load static %}
-
 </div>
-<div class="row row-cols-2">
+<div class="row row-cols-3">
 <div class="col-md-2">
 <div class="other_chats">
 </div>
 </div>
+
 <div class="col-md-8">
 <div class="container">
-  <div class="more-messages">
-    <button type="button" onclick= name="button"></button>
-  </div>
-    <div class="chat_update" id='scroll-messages'>
-    </div>
+    <div id='scroll-messages'>
 
+
+    <button class="load"> Hover to show more messages </button>
+
+    <div class="chat_update">
+    </div>
+    </div>
+</div>
     <form  class='form-message-ajax' method='POST' action='{% url "WebChat:create" pk=chat.pk %}'>
         {% csrf_token %}
         {% bootstrap_form form %}
         <input type="submit" value="Send!" class="btn btn-default">
     </form>
 </div>
+<div class='col-2'>
+  {% include 'Webchat/search.html' %}
 </div>
 </div>
+
 <script type="text/javaScript" src="{% static 'js/chat.js' %}" ></script>
 <script>
-  window.setInterval(function(){get_Msg()}, 1000)
+
+  //go to the end of messages
+  function goDown(time){
+    setTimeout(function() {
+      var objDiv = document.getElementById("scroll-messages");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }, time);
+  }
+
+function update(time){
+  var n = 30
+  $('.load').mouseenter(function(){
+    n += 10
+    })
+  window.setInterval(function(){get_Msg(n)}, time);
+};
+
+update(1000)
+
+
+
+
+  $(document).ready(goDown(1130));
 </script>
 
 {% endblock %}

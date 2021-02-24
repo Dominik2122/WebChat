@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.HomePage.as_view(),name='home'),
     path('accounts/', include('accounts.urls')),
-    path('chat/', include('WebChat.urls'))
+    path('chat/', include('WebChat.urls')),
+    path('search/', views.SearchView.as_view(), name = 'search')
 ]

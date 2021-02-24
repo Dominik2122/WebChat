@@ -51,6 +51,14 @@ beforeSend: function(xhr, settings) {
 });
 });
 
+function goDown(time){
+  setTimeout(function() {
+    var objDiv = document.getElementById("scroll-messages");
+    objDiv.scrollTop = objDiv.scrollHeight;
+  }, time);
+}
+
+
 function update_Msg(messages, current_user_id, end){
   var chat_field = $('.chat_update')
   chat_field.empty()
@@ -72,6 +80,7 @@ function update_Msg(messages, current_user_id, end){
     }
         }
       }
+
     };
 
 function update_list(messages, current_user_id, users_id){
@@ -88,13 +97,13 @@ function update_list(messages, current_user_id, users_id){
 };
 
 
-function get_Msg(){
+function get_Msg(n){
     $.ajax({
       url: "",
       method: "GET",
       data: {},
       success: function(json){
-        update_Msg(json['messages'], json['current_user_id'],16),
+        update_Msg(json['messages'], json['current_user_id'],n),
         update_list(json['other_messages'], json['current_user_id'], json['users_id'])
       },
       error: function(errorData){
@@ -106,6 +115,7 @@ function get_Msg(){
   $(document).ready(function(){
     var messageForm = $('.form-message-ajax')
     messageForm.submit(function(event){
+      goDown(1300)
       event.preventDefault()
       var thisForm = messageForm
       var actionEndPoint = thisForm.attr('action')
@@ -113,6 +123,7 @@ function get_Msg(){
       var formData = thisForm.serializeArray()[1]['value']
       var chatId = actionEndPoint.replace(/\D/g, "")
       messageForm.trigger("reset")
+
       $.ajax({
         url: "create/",
         method: httpMethod,

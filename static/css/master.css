@@ -10,8 +10,15 @@ h1 {
 
 
 #scroll-messages{
-  height: calc(100vh - 200px);
+  height: calc(75vh);
   overflow-y: scroll;
+
+}
+
+#new{
+  height: calc(60vh - 200px);
+  overflow-y: scroll;
+
 }
 
 .old_message {

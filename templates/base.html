@@ -14,7 +14,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
     			<div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">Home Page</a>
+            <a class="navbar-brand btn btn-simple my-2 my-lg-0" href="{% url 'home' %}">Home Page</a>
     					<ul class="nav navbar-nav">
 
                 {% if user.is_authenticated %}
@@ -24,7 +24,9 @@
       					<li><a href="{% url 'accounts:login' %}" class="btn btn-simple">Log in</a></li>
       					<li><a href="{% url 'accounts:signup' %}" class="btn btn-simple">Sign up</a></li>
                 {% endif %}
+
     					</ul>
+
             </div>
     	</nav>
 
@@ -32,6 +34,53 @@
           {% block content %}
           {% endblock %}
         </div>
+<script>
+
+// just a quick js option to make autosearch after 1,5s after the end of typing
+$(document).ready(function(){
+  var searchForm = $(".search-form")
+  var searchInput = searchForm.find("[name='q']")
+  var typingTimer;
+  var typingInterval = 1500
+
+  searchInput.keyup(function(event){
+    clearTimeout(typingTimer)
+    tyingTimer = setTimeout(performSearch, typingInterval)
+  })
+
+  searchInput.keydown(function(event){
+    clearTimeout(typingTimer)
+  })
+
+  function performSearch(){
+  var query = searchInput.val()
+  $.ajax({
+      url : "/search/?q="+query,
+      type : "GET",
+      data : {'search': query},
+      success : function(json) {
+          searchResults(json['chats'], json['chatUserList'], json['all_users'])
+          },
+          error : function(xhr,errmsg,err) {
+              console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+          }
+      });
+    }
+  });
+
+function searchResults(chats, chatUserList, all_users){
+  var contentPlace = $('.search-results-field');
+  contentPlace.empty();
+  for(var user of all_users){
+    if (user.id in chatUserList){
+    contentPlace.append(`<a href = /chat/${chatUserList[user.id]}><p class='search-results'> ${user.username} </p></a>`);
+} else{
+    contentPlace.append(`<a href = /chat/create/${user.id}><p class='search-results'> ${user.username} - You haven't spoken yet! </p></a>`);
+}
+}}
+
+
+</script>
 
   </body>
 </html>

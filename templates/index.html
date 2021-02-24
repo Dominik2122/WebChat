@@ -31,10 +31,8 @@
     </div>
 
     <div class="col-4">
-    <h1>Maybe you would like to talk to someone new?</h1>
-    {% for user in other_users %}
-    <p><a href="{% url 'WebChat:new' pk=user.pk %}">{{user.username}}</a></p>
-    {% endfor %}
+    <h1>Find users:</h1>
+    {% include 'Webchat/search.html' %}
     </div>
 
     </div>
