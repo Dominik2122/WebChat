@@ -1,33 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 {% load bootstrap4 %}
+
     <h1>Welcome to WebChat </h1>
     <div class="row row-cols-3">
 
 
     <div class="col-4">
     <h1>Your recent chats</h1>
-    {% for chat in user_chats %}
-    {% for member in chat.members.all %}
-    {% if member != current_user %}
-    <a href="{% url 'WebChat:chat' pk=chat.pk%}"><p>Chat with: {{member.username}}</p>
-      <p>{{chat.messages.all.last.author}} wrote: {{chat.messages.all.last.message}}</p></a>
-    {% endif  %}
-    {% endfor %}
-    {% endfor %}
+
+    <div class="old-messages-place">
+      <h1> hi </h1>
+    </div>
+
+
     </div>
     <div class="col-4">
     <h1>Your unread messages</h1>
-    {% for chat in new_messages_chats %}
-    {% for member in chat.members.all %}
-    {% if member != current_user and member.username == chat.messages.all.last.author.username %}
-    <div class="unread message">
-      <a href="{% url 'WebChat:chat' pk=chat.pk%}"><p>Chat with: {{member.username}}</p>
-        <p>{{chat.messages.all.last.author}} wrote: {{chat.messages.all.last.message}}</p></a>
+    <div class="new-messages-place">
+      <h1> hi </h1>
     </div>
-    {% endif  %}
-    {% endfor %}
-    {% endfor %}
     </div>
 
     <div class="col-4">
@@ -36,6 +28,60 @@
     </div>
 
     </div>
+
+
+
+
+<script>
+
+
+
+let newMessagesUpdate = () => {
+  $.ajax({
+    url: '',
+    method: 'GET',
+    data: {},
+    success: (json)=>{
+      newMessages(json['unreadChats'],json['usersId'], json['chat_info'], json['readChats'], json['readChatsinfo']);
+    }
+  })
+
+}
+
+
+let newMessages = (unreadChats, users_id, chat_info, readChats, readChatsinfo) =>{
+  let contentPlace = $('.new-messages-place');
+  let oldMessagesPlace = $('.old-messages-place');
+  contentPlace.empty();
+  oldMessagesPlace.empty();
+  var j = 0
+  for (var i of unreadChats){
+    contentPlace.append(`<h4>Chat with: ${users_id[chat_info[j][i][0]]}</h4> <a href='chat/${i}/'><p class = 'new-message'> ${users_id[chat_info[j][i][0]]} wrote: ${chat_info[j][i][1]}  </p></a>`);
+    j++;
+  };
+  j=0
+  for (var i of readChats){
+
+  if (readChatsinfo[j][i].length == 2 ){
+      console.log(readChatsinfo[j][i])
+    oldMessagesPlace.append(`<h4>Chat with: ${users_id[readChatsinfo[j][i][0]]}</h4><a href='chat/${i}/'><p class = 'new-message'> ${users_id[readChatsinfo[j][i][0]]} wrote: ${readChatsinfo[j][i][1]}  </p></a>`);
+  } else{
+    oldMessagesPlace.append(`<h4>Chat with: ${users_id[readChatsinfo[j][i][2]]}</h4><a href='chat/${i}/'><p class = 'new-message'> You wrote: ${readChatsinfo[j][i][1]}  </p></a>`);
+  }
+  j++;
+  }
+  };
+
+
+
+$(document).ready(function(){
+  window.setInterval(()=>{newMessagesUpdate()}, 1500)
+})
+
+
+</script>
+
+
 
 
 {% endblock %}

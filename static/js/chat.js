@@ -112,6 +112,8 @@ function get_Msg(n){
 };
 
 
+
+
   $(document).ready(function(){
     var messageForm = $('.form-message-ajax')
     messageForm.submit(function(event){
