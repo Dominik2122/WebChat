@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import django_heroku
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +27,7 @@ SECRET_KEY = 'bt!d#3sdk_u5%g=eihcpz6952l*vlsc@ke7tzdmpd_-#!q00=w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://cool-web-chat.herokuapp.com/', '127.0.0.1:8000/']
 
 
 # Application definition
@@ -126,3 +126,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR,]
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+django_heroku.settings(locals())
