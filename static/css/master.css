@@ -1,5 +1,5 @@
 body {
-  background: #e1fcf7
+  background: #e1fcf7;
 }
 
 h3 {
@@ -34,7 +34,7 @@ h3 {
   padding: 5px;
   margin-top:5px;
   color:white;
-  text-align: center
+  text-align: center;
 }
 
 .received_message {
@@ -47,6 +47,7 @@ h3 {
   margin-right: auto;
   margin-top:5px;
   font-size: 1.2rem;
+  overflow-wrap: break-word;
 }
 
 .sent_message {
@@ -59,6 +60,8 @@ h3 {
   margin-left: auto;
   margin-top:5px;
   font-size: 1.2rem;
+  overflow-wrap: break-word;
+
 }
 
 
@@ -97,11 +100,13 @@ h3 {
 
 .old_message {
   color:black;
+  overflow-wrap: break-word;
 }
 
 .new_message {
   color:black;
   font-size:bold;
+  overflow-wrap: break-word;
 }
 
 

@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 {% load bootstrap4 %}
-{% load crispy_forms_tags %}
 
 {% load static %}
 </div>
@@ -24,7 +23,7 @@
 </div>
     <form  class='form-message-ajax' style='margin-top: 10px'method='POST' action='{% url "WebChat:create" pk=chat.pk %}'>
         {% csrf_token %}
-        {% crispy form %}
+        {% bootstrap_form form %}
         <input type="submit" value="Send!" class="btn btn-default">
     </form>
 </div>

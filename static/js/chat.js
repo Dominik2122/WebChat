@@ -90,9 +90,9 @@ function update_list(messages, current_user_id, users_id){
   for(var i = 0; i<messages.length; i++){
     var author_name = users_id[messages[i]['author']]
     if(messages[i]['unread'] != true | messages[i]['prev-author'] == current_user_name){
-    other_chats.append("<div class='messages_recent'><a class = 'old_message' href='/chat/"+messages[i]['chat']+"/'><h3 class = 'list_user'>"+ author_name + " wrote: </h3><h3 class = 'list_messages'>" +messages[i]['message'] + "</h3></a></div>")
+    other_chats.append("<div class='messages_recent'><a class = 'old_message' href='/chat/"+messages[i]['chat']+"/'><h3 class = 'list_user'>"+ author_name + " wrote: </h3><p style='font-size: 1.2rem'>" +messages[i]['message'] + "</p></a></div>")
   } else{
-    other_chats.append("<div class='new_messages_recent'><a class = 'new_message' href='/chat/"+messages[i]['chat']+"/'><h3 class = 'new_list_user'>"+ author_name + " wrote: </h3><h3 class = 'new_list_messages'>" +messages[i]['message'] + "</h3></a></div>")
+    other_chats.append("<div class='new_messages_recent'><a class = 'new_message' href='/chat/"+messages[i]['chat']+"/'><h3 class = 'new_list_user'>"+ author_name + " wrote: </h3><p style='font-size: 1.2rem'>" +messages[i]['message'] + "</p></a></div>")
   }}
 };
 
