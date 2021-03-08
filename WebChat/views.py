@@ -80,7 +80,6 @@ def MessageCreate(request, pk):
 @login_required
 def ChatCreate(request, pk):
     chat_exist = list(Chat.objects.filter(members = request.user.pk).filter(members = pk))
-    print(chat_exist)
     if len(chat_exist)==0:
         new_chat = Chat.objects.create()
         new_chat.members.set(User.objects.filter(id__in=[pk,request.user.id]))

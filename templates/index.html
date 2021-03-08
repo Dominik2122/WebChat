@@ -2,28 +2,31 @@
 {% block content %}
 {% load bootstrap4 %}
 
-    <h1>Welcome to WebChat </h1>
     <div class="row row-cols-3">
 
+    <div class="col-4 ">
+    <h3>Recent chats</h3>
+    <div class="recent-messages-place">
 
-    <div class="col-4">
-    <h1>Your recent chats</h1>
 
     <div class="old-messages-place">
-      <h1> hi </h1>
-    </div>
 
+    </div>
+    </div>
 
     </div>
     <div class="col-4">
-    <h1>Your unread messages</h1>
+    <h3>Unread messages</h3>
+    <div class="recent-messages-place">
+
+    </div>
     <div class="new-messages-place">
-      <h1> hi </h1>
+
     </div>
     </div>
 
-    <div class="col-4">
-    <h1>Find users:</h1>
+    <div class="col-3">
+    <h3>Find users:</h3>
     {% include 'WebChat/search.html' %}
     </div>
 
@@ -55,7 +58,7 @@ let newMessages = (unreadChats, users_id, chat_info, readChats, readChatsinfo) =
   oldMessagesPlace.empty();
   var j = 0
   for (var i of unreadChats){
-    contentPlace.append(`<h4>Chat with: ${users_id[chat_info[j][i][0]]}</h4> <a href='chat/${i}/'><p class = 'new-message'> ${users_id[chat_info[j][i][0]]} wrote: ${chat_info[j][i][1]}  </p></a>`);
+    contentPlace.append(`<div class = 'new_messages_recent'><h4>Chat with: ${users_id[chat_info[j][i][0]]}</h4><a href='chat/${i}/' id=''><p style='color:black; font-size: 1.5rem;' class = 'new-message'>  ${users_id[chat_info[j][i][0]]} wrote: ${chat_info[j][i][1]} </p></a></div>`);
     j++;
   };
   j=0
@@ -63,9 +66,9 @@ let newMessages = (unreadChats, users_id, chat_info, readChats, readChatsinfo) =
 
   if (readChatsinfo[j][i].length == 2 ){
       console.log(readChatsinfo[j][i])
-    oldMessagesPlace.append(`<h4>Chat with: ${users_id[readChatsinfo[j][i][0]]}</h4><a href='chat/${i}/'><p class = 'new-message'> ${users_id[readChatsinfo[j][i][0]]} wrote: ${readChatsinfo[j][i][1]}  </p></a>`);
+    oldMessagesPlace.append(`<div class = 'messages_recent'><h4>Chat with: ${users_id[readChatsinfo[j][i][0]]}</h4><a href='chat/${i}/'><p style='color:black' class = 'new-message'> ${users_id[readChatsinfo[j][i][0]]} wrote: ${readChatsinfo[j][i][1]}  </p></a></div>`);
   } else{
-    oldMessagesPlace.append(`<h4>Chat with: ${users_id[readChatsinfo[j][i][2]]}</h4><a href='chat/${i}/'><p class = 'new-message'> You wrote: ${readChatsinfo[j][i][1]}  </p></a>`);
+    oldMessagesPlace.append(`<div class = 'messages_recent'><h4>Chat with: ${users_id[readChatsinfo[j][i][2]]}</h4><a href='chat/${i}/'><p style='color:black' class = 'new-message'> You wrote: ${readChatsinfo[j][i][1]}  </p></a></div>`);
   }
   j++;
   }

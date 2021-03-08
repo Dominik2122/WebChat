@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 {% load bootstrap4 %}
+{% load crispy_forms_tags %}
+
 {% load static %}
 </div>
 <div class="row row-cols-3">
@@ -9,7 +11,7 @@
 </div>
 </div>
 
-<div class="col-md-8">
+<div class="col-md-7">
 <div class="container">
     <div id='scroll-messages'>
 
@@ -20,14 +22,18 @@
     </div>
     </div>
 </div>
-    <form  class='form-message-ajax' method='POST' action='{% url "WebChat:create" pk=chat.pk %}'>
+    <form  class='form-message-ajax' style='margin-top: 10px'method='POST' action='{% url "WebChat:create" pk=chat.pk %}'>
         {% csrf_token %}
-        {% bootstrap_form form %}
+        {% crispy form %}
         <input type="submit" value="Send!" class="btn btn-default">
     </form>
 </div>
 <div class='col-2'>
+  <div class="search-field-chatview">
+
+
   {% include 'WebChat/search.html' %}
+  </div>
 </div>
 </div>
 

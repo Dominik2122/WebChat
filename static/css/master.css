@@ -1,18 +1,92 @@
+body {
+  background: #e1fcf7
+}
 
-h1 {
+h3 {
   text-align: center;
 }
 
+
 .current-user-message {
-  color: blue;
   text-align: right;
 }
+
+
+.recent-messages-place{
+  margin-right: 5%;
+  font-size: 1.5rem;
+  text-align: center
+}
+
+.messages_recent {
+  border: 4px solid #4af0bb;
+  border-radius: 25px;
+  background-color:#74e8c3;
+  padding: 5px;
+  margin-top:5px;
+  color:white;
+}
+
+.new_messages_recent {
+  border: 4px solid #4af0bb;
+  border-radius: 25px;
+  background-color:#1cb064;
+  padding: 5px;
+  margin-top:5px;
+  color:white;
+  text-align: center
+}
+
+.received_message {
+  width:40%;
+  border: 4px solid #4af0bb;
+  height: auto;
+  border-radius: 25px;
+  background-color:#74e8c3;
+  padding: 5px;
+  margin-right: auto;
+  margin-top:5px;
+  font-size: 1.2rem;
+}
+
+.sent_message {
+  width: 40%;
+  height: auto;
+  border: 4px solid #4af0bb;
+  border-radius: 25px;
+  background-color:#1cb064;
+  padding: 5px;
+  margin-left: auto;
+  margin-top:5px;
+  font-size: 1.2rem;
+}
+
+
+
+
+#message-text {
+  color:black;
+}
+#author-text {
+  color:red;
+}
+
 
 
 #scroll-messages{
   height: calc(75vh);
   overflow-y: scroll;
 
+}
+
+.load {
+  width: 100%;
+  background-color: lightblue;
+}
+
+.load:hover {
+  width: 100%;
+  background-color: #1cb064;
 }
 
 #new{
@@ -26,6 +100,13 @@ h1 {
 }
 
 .new_message {
-  color:blue;
+  color:black;
   font-size:bold;
+}
+
+
+
+
+.search-field-chatview {
+  margin-right: 20%
 }

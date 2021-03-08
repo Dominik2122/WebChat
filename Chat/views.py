@@ -15,8 +15,6 @@ class HomePage(TemplateView):
     template_name = 'index.html'
     def get(self,request,*args, **kwargs):
         if self.request.user.is_authenticated:
-
-            print('true')
             self.current_user = request.user
             if request.is_ajax():
                 mess = Message.objects.filter(unread = True).exclude(author=self.current_user).reverse()

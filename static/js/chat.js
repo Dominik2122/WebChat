@@ -65,18 +65,18 @@ function update_Msg(messages, current_user_id, end){
   if(messages.length>=end){
   for(i = messages.length-end; i < messages.length; i++){
     if (messages[i].author_id==current_user_id){
-    chat_field.append("<p class='current-user-message'>" + messages[i]['message'] + '</p>')
+    chat_field.append("<div class='sent_message'><p class='current-user-message'>" + messages[i]['message'] + '</p></div>')
   } else {
-    chat_field.append("<p class='other-user-message'>" + messages[i]['message'] + '</p>')
+    chat_field.append("<div class='received_message'><p class='other-user-message'>" + messages[i]['message'] + '</p></div>')
   }
       }
     }
   else {
     for(i = 0; i < messages.length; i++){
       if (messages[i].author_id==current_user_id){
-      chat_field.append("<p class='current-user-message'>" + messages[i]['message'] + '</p>')
+      chat_field.append("<div class='sent_message'><p class='current-user-message'>" + messages[i]['message'] + '</p></div>')
     } else {
-      chat_field.append("<p class='other-user-message'>" + messages[i]['message'] + '</p>')
+      chat_field.append("<div class='received_message'><p class='other-user-message'>" + messages[i]['message'] + '</p></div>')
     }
         }
       }
@@ -90,9 +90,9 @@ function update_list(messages, current_user_id, users_id){
   for(var i = 0; i<messages.length; i++){
     var author_name = users_id[messages[i]['author']]
     if(messages[i]['unread'] != true | messages[i]['prev-author'] == current_user_name){
-    other_chats.append("<a class = 'old_message' href='/chat/"+messages[i]['chat']+"/'><h2 class = 'list_user'>"+ author_name + "</h2><p class = 'list_messages'>" +messages[i]['message'] + "</p></a>")
+    other_chats.append("<div class='messages_recent'><a class = 'old_message' href='/chat/"+messages[i]['chat']+"/'><h3 class = 'list_user'>"+ author_name + " wrote: </h3><h3 class = 'list_messages'>" +messages[i]['message'] + "</h3></a></div>")
   } else{
-    other_chats.append("<a class = 'new_message' href='/chat/"+messages[i]['chat']+"/'><h2 class = 'new_list_user'>"+ author_name + "</h2><p class = 'new_list_messages'>" +messages[i]['message'] + "</p></a>")
+    other_chats.append("<div class='new_messages_recent'><a class = 'new_message' href='/chat/"+messages[i]['chat']+"/'><h3 class = 'new_list_user'>"+ author_name + " wrote: </h3><h3 class = 'new_list_messages'>" +messages[i]['message'] + "</h3></a></div>")
   }}
 };
 
